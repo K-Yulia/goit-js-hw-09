@@ -21,7 +21,7 @@ const options = {
       Notiflix.Notify.failure('Please choose a date in the future');
       btnStart.disabled = true;
     } else {
-      dateCount = selectedDates[0];
+      // dateCount = selectedDates[0];
       btnStart.disabled = false;
     }
   },
