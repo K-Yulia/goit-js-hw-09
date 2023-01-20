@@ -8,6 +8,7 @@ const dataDays = document.querySelector('span[data-days]');
 const dataHours = document.querySelector('span[data-hours]');
 const dataMinutes = document.querySelector('span[data-minutes]');
 const dataSeconds = document.querySelector('span[data-seconds]');
+let timerId = null;
 
 btnStart.disabled = true;
 
