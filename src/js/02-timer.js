@@ -17,12 +17,11 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-  onClose(selectedDates) {
-    if (selectedDates[0] < new Date()) {
+  onClose([selectedDates]) {
+    if (selectedDates < Date.now()) {
       Notiflix.Notify.failure('Please choose a date in the future');
       btnStart.disabled = true;
     } else {
-      // dateCount = selectedDates[0];
       btnStart.disabled = false;
     }
   },
@@ -53,20 +52,22 @@ function addLeadingZero(value) {
 }
 
 btnStart.addEventListener('click', onStartTimer);
-
+function dataAll({ days, hours, minutes, seconds }) {
+  dataDays.textContent = addLeadingZero(days);
+  dataHours.textContent = addLeadingZero(hours);
+  dataMinutes.textContent = addLeadingZero(minutes);
+  dataSeconds.textContent = addLeadingZero(seconds);
+}
 function onStartTimer() {
   timerId = setInterval(() => {
-    let interval = new Date(dataInput.value) - new Date();
+    let interval = new Date(dataInput.value) - Date.now();
     if (interval <= 0) {
       clearInterval(timerId);
       Notiflix.Notify.info('Time is out!');
     } else {
       btnStart.disabled = true;
-      const { days, hours, minutes, seconds } = convertMs(interval);
-      dataDays.textContent = addLeadingZero(days);
-      dataHours.textContent = addLeadingZero(hours);
-      dataMinutes.textContent = addLeadingZero(minutes);
-      dataSeconds.textContent = addLeadingZero(seconds);
+      let dataObject = convertMs(interval);
+      dataAll(dataObject);
     }
   }, 1000);
 }
